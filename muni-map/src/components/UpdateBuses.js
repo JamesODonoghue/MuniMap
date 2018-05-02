@@ -1,21 +1,17 @@
 import map from './Map';
 import NextBusService from '../services/NextBusService';
 
-
 var busDisplay = {};
 
 
 busDisplay.getVehicles = function(){
 
-    let _this = this
-    let lastReportTime = 0
+    let lastReportTime = NextBusService.lastTimeReported;
     
     let params = {
       agencyTag: 'sf-muni',
       routeTag: ''
     }
-
-    // let params = Object.assign({}, defaults, queryParams)
 
     let success = (data) => {
         busDisplay.updateBuses(data);
@@ -30,24 +26,57 @@ busDisplay.getVehicles = function(){
 
 }
 
+busDisplay.filterBuses = function(routeFilter){
+
+
+    let busLayer = map.svg
+    let currentBuses = busLayer.selectAll('.bus')
+
+    currentBuses.style('opacity', function(d){
+        if(d.routeTag != routeFilter){
+            return 0;
+        }
+    })
+
+}
+
 
 busDisplay.updateBuses = function(busData){
     let currentBuses, 
     newBuses, 
     projection = map.projection;
 
-    currentBuses = map.buses.selectAll('.bus')
+    let busLayer = map.svg
+
+    currentBuses = busLayer.selectAll('.bus')
         .data(busData, function(d) { 
         return d.id; 
         })
 
-
-    // currentBuses.selectAll('.bus').remove();
-
-    newBuses = currentBuses.enter()
-
-    newBuses
+    currentBuses.enter()
         .append('circle')
+        .attr('r', 0)
+
+    currentBuses
+        .attr('fill', 'green')
+        .transition()
+        .duration(1500)
+        .attr('cx', function (d) { 
+            return projection([d.lon, d.lat])[0]; 
+            })
+        .attr('cy', function (d) { 
+            return projection([d.lon, d.lat])[1]; 
+            })
+        .attr('r', 6)
+        .transition()
+        .duration(500)            
+        .attr('r', 4)      
+        .attr('fill', 'red');
+
+    
+    currentBuses.enter()
+        .append('circle')
+        .attr('class', 'bus')        
         .attr('cx', function (d) { 
         return projection([d.lon, d.lat])[0]; 
         })
@@ -57,8 +86,8 @@ busDisplay.updateBuses = function(busData){
         .attr('r', '4px')      
         .attr('fill', 'red');
 
+    
 
-    currentBuses.exit().remove()
 }
 
 export default busDisplay;

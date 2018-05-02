@@ -59,8 +59,7 @@ export default map = {
             .style('fill', '#eee')
 
         map.geoPath = geoPath;
-        map.buses = svg.append('g')
-            .attr('class', 'bus')
+        map.svg = svg;
 
         map.projection = projection;
 

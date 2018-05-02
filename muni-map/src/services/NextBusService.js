@@ -19,6 +19,16 @@ export default NextBusService = {
             .then(function(res) { return res.data; })
     },
 
+    getRouteList: function(agencyTag) {
+        var params = {
+            a: agencyTag,
+            command: 'routeList'
+        };
+
+        return NextBusService.getData(params)
+
+    },
+
     getVehicleLocations: function(agencyTag, routeTag, lastTime, callback ) {
         lastTime = lastTime || 0; // Last 15 min default
 
@@ -32,8 +42,9 @@ export default NextBusService = {
         if (lastTime) params.t = lastTime;
 
 
-        return this.getData(params)
+        return NextBusService.getData(params)
             .then(function(data){
+                NextBusService.lastTimeReported = data.lastTime.time;
                 return data.vehicle.map(function(busData){
                     return busData;
                 })
