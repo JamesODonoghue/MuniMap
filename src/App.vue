@@ -14,11 +14,12 @@ import streets from './assets/streets.json'
 import neighborhoods from './assets/neighborhoods.json'
 import freeways from './assets/freeways.json'
 import NextBusService from './services/NextBusService'
-import Map from './components/Map'
+
 import RouteFilter from './components/RouteFilter.vue'
 import Header from './components/Header.vue'
 
-import UpdateBuses from './genrators/UpdateBuses'
+import Map from './generators/Map'
+import UpdateBuses from './generators/UpdateBuses'
 
 export default {
 
