@@ -34,7 +34,7 @@ export default {
     UpdateBuses.getVehicles();
     setInterval(function(){
       UpdateBuses.getVehicles();
-    }, 5000)
+    }, 15000)
 
   }
 }
