@@ -65,7 +65,7 @@ busDisplay.updateBuses = function(busData){
 
     currentBuses
         .transition()
-        .duration(5000)
+        .duration(2000)
         .attr('transform', function(d) {
             return 'translate(' + projection([d.lon, d.lat]) + ')'
           })
