@@ -7,7 +7,7 @@
 <script>
 
 import NextBusService from '@/services/NextBusService'
-import UpdateBuses from '@/components/UpdateBuses'
+import UpdateBuses from '@/generators/UpdateBuses'
 
 export default {
 

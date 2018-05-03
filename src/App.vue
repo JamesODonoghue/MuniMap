@@ -18,7 +18,7 @@ import Map from './components/Map'
 import RouteFilter from './components/RouteFilter.vue'
 import Header from './components/Header.vue'
 
-import UpdateBuses from './components/UpdateBuses'
+import UpdateBuses from './genrators/UpdateBuses'
 
 export default {
 
