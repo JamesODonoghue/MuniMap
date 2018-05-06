@@ -5,10 +5,12 @@
 
 ## Tech Stack
 
-D3 for map and bus drawing/color/manipulation
-VueJS for view rendering
-Webpack for bundling and minification
-Axios for HTTP requests
+
+
+-  D3 for map and bus drawing/color/manipulation
+-  VueJS for view rendering
+-  Webpack for bundling and minification
+-  Axios for HTTP requests
 
 
 ## Build Setup
