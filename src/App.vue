@@ -12,13 +12,7 @@ import NextBusService from './services/NextBusService'
 
 import RouteFilter from './components/RouteFilter.vue'
 import AppHeader from './components/AppHeader.vue'
-
-import Map from './generators/Map'
-import Bus from './generators/Bus'
-
 import BaseMap from './components/BaseMap.vue'
-
-import 'materialize-css'
 
 export default {
 
