@@ -1,6 +1,15 @@
 # muni-map
 
-> This is a sample project for a ThousandEyes interview
+> This is a sample Project which uses the NextBus API to display SF Muni buses in (almost) real-time
+
+
+## Tech Stack
+
+D3 for map and bus drawing/color/manipulation
+VueJS for view rendering
+Webpack for bundling and minification
+Axios for HTTP requests
+
 
 ## Build Setup
 

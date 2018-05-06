@@ -1,9 +1,5 @@
 <template>
 
-    <g>
-
-    </g>
-
 </template>
 
 <script>
@@ -132,8 +128,6 @@
                 newBuses = currentBuses.enter()
                     .append('g')
                     .attr('class', 'bus')
-     
-   
 
                 // Bus icon
                 newBuses
