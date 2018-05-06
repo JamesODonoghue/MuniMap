@@ -1,4 +1,6 @@
-# muni-map
+# Muni-Map
+
+James O'Donoghue
 
 > This is a sample Project which uses the NextBus API to display SF Muni buses in (almost) real-time
 
