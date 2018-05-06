@@ -1,34 +1,74 @@
 <template>
-    <div class="route-filter">
-        <input type="text" id="myInput" v-model="filter" placeholder="Search for Routes..." title="Type in a name">
+    <div class="filter-route-container card">
+        <h2> Filter by Route</h2>
+        <div class="container routes-container">
+            <div v-for="route in routes" :key="route.id">
+                <label>
+                    <input class="filled-in" type="checkbox" checked="checked" :value="route.tag" v-model="selectedRoutes" @change="updateValue">
+                    <span class=""> {{route.tag}}</span>
+                </label>            
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 
-import NextBusService from '@/services/NextBusService'
-import UpdateBuses from '@/generators/UpdateBuses'
+    import eventHub from '@/services/EventHub.js';
+    import * as constants from '@/constants/constants.js';
 
-export default {
+    import NextBusService from '@/services/NextBusService';
+    import _ from 'lodash';
 
-  name: 'RouteFilter',
+    export default {
+        name: 'BusRoutes',
 
-  data() {
-      return {
-          filter: '',
-          routeList: []
-      }
-  },
+        data() {
+            return {
+                routes: [],
+                selectedRoutes: this.value || []
+            }
+        },
 
-  watch: {
-      filter: function(val){
-          console.log(val)
-          UpdateBuses.filterBuses(val)
-      }
-  }
-}
+        mounted() {
+
+            this.getRoutes().then(function(data){
+                this.routes = data.route
+                eventHub.$emit(constants.GET_ROUTE_SUCCESS, data);
+            }.bind(this))
+
+        },
+
+        watch: {
+            selectedRoutes: function(val){
+                console.log(val);
+            }
+        },
+
+        methods:{
+            getRoutes: function() {
+                var self = this;
+                return NextBusService.getRouteList(constants.MUNI_TAG);
+            },
+
+            updateValue: function() {
+                eventHub.$emit(constants.UPDATE_ROUTE, this.selectedRoutes);
+            }
+        }
+    }
 </script>
 
-<style>
+<style scoped>
+
+.routes-container {
+    max-height: 600px;
+    max-width: 400px;
+    overflow: auto;
+}
+
+.filter-route-container{
+    position: fixed;
+    padding: 2em;
+}
 
 </style>

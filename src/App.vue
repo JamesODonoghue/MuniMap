@@ -1,41 +1,38 @@
 <template>
   <div id="app">
-    <div class="container fixed-top">
-      <app-header/>
-      <route-filter/>
-    </div>    
-    <div id=#map></div>
+    <AppHeader/>
+    <BaseMap/>
+    <RouteFilter />
   </div>
 </template>
 
 <script>
 
-import streets from './assets/streets.json'
-import neighborhoods from './assets/neighborhoods.json'
-import freeways from './assets/freeways.json'
 import NextBusService from './services/NextBusService'
 
 import RouteFilter from './components/RouteFilter.vue'
-import Header from './components/Header.vue'
+import AppHeader from './components/AppHeader.vue'
 
 import Map from './generators/Map'
-import UpdateBuses from './generators/UpdateBuses'
+import Bus from './generators/Bus'
+
+import BaseMap from './components/BaseMap.vue'
+
+import 'materialize-css'
 
 export default {
 
   name: 'App',
   components: {
-    'route-filter': RouteFilter,
-    'app-header': Header
+    RouteFilter,
+    BaseMap,
+    AppHeader
   },
 
-  mounted() {
-    Map.load();
-    UpdateBuses.getVehicles();
-    setInterval(function(){
-      UpdateBuses.getVehicles();
-    }, 15000)
-
+  data() {
+    return {
+      routes: []
+    }
   }
 }
 </script>

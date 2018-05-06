@@ -22,7 +22,7 @@ export default NextBusService = {
     getRouteList: function(agencyTag) {
         var params = {
             a: agencyTag,
-            command: 'routeList'
+            command: 'routeConfig'
         };
 
         return NextBusService.getData(params)
