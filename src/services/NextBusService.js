@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-const NEXT_BUS_URL = '//webservices.nextbus.com/service/publicJSONFeed';
+const NEXT_BUS_URL = 'http://webservices.nextbus.com/service/publicJSONFeed';
 
 var NextBusService = {};
 
