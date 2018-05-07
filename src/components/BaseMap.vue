@@ -4,7 +4,6 @@
             <MapFeatures v-bind:path="geoPath()" v-bind:features="hoods.features" :featureClass="hoods.class"/>
             <MapFeatures v-bind:path="geoPath()" v-bind:features="streets.features" :featureClass="streets.class"/>
             <MapFeatures v-bind:path="geoPath()" v-bind:features="arteries.features" :featureClass="arteries.class"/>
-            
             <MuniBuses v-bind:projection="projection()"/>
         </svg>
     </div>
@@ -91,7 +90,6 @@
         position: absolute;
         padding-left: 100px;
         border: 1px solid grey;
-        border-radius: 6px;
         background: lightblue;
     }
 

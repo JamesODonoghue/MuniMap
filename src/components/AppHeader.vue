@@ -1,10 +1,8 @@
 <template>
-    <div class="jumbotron text-center">
-        <div class="display-3"> This is an SF Muni Map </div>
+    <div class="text-center p-4">
+        <h1> SF Muni Map </h1>
         <div> powered by NextBus!</div>
-        <i class="large material-icons">directions_bus</i>
-
-
+        <i class="medium material-icons">directions_bus</i>
     </div>
 </template>
 
@@ -15,5 +13,9 @@
 </script>
 
 <style scoped>
+
+h1 {
+    font-weight: 300;
+}
 
 </style>

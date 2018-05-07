@@ -61,7 +61,7 @@
 <style scoped>
 
 .routes-container {
-    max-height: 600px;
+    max-height: 400px;
     max-width: 400px;
     overflow: auto;
 }
@@ -69,6 +69,7 @@
 .filter-route-container{
     position: fixed;
     padding: 2em;
+    margin-left: 1em;
 }
 
 </style>
