@@ -1,0 +1,7 @@
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+
+export const FETCH_ROUTES_SUCCESS = 'FETCH_ROUTES_SUCCESS';
+export const FETCH_VEHICLES_SUCCESS = 'FETCH_VEHICLES_SUCCESS';
+
+export const HIDE_VEHICLE = 'HIDE_VEHICLE';
