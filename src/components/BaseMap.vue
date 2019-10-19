@@ -1,96 +1,121 @@
 <template>
     <div>
-        <svg width="100%" height="100%" id="map" class="sf-map">
-            <MapFeatures v-bind:path="geoPath()" v-bind:features="hoods.features" :featureClass="hoods.class"/>
-            <MapFeatures v-bind:path="geoPath()" v-bind:features="streets.features" :featureClass="streets.class"/>
-            <MapFeatures v-bind:path="geoPath()" v-bind:features="arteries.features" :featureClass="arteries.class"/>
-            <MuniBuses v-bind:projection="projection()"/>
+        <svg :width="width" :height="height" id="map" class="sf-map">
+            <MapFeatures v-bind:path="geoPath" v-bind:features="hoods.features" :featureClass="hoods.class"/>
+            <MapFeatures v-bind:path="geoPath" v-bind:features="streets.features" :featureClass="streets.class"/>
+            <MapFeatures v-bind:path="geoPath" v-bind:features="arteries.features" :featureClass="arteries.class"/>
+            <MuniBuses v-bind:objects="routeVehicles"/>
+            <circle :transform="transform" r="10px"></circle>
         </svg>
     </div>
 </template>
 
 <script>
-    import * as d3 from 'd3';
-    import streets from '@/assets/streets.json';
-    import hoods from '@/assets/neighborhoods.json';
-    import arteries from '@/assets/arteries.json';
-    
+import * as d3 from "d3";
+import streets from "@/assets/streets.json";
+import hoods from "@/assets/neighborhoods.json";
+import arteries from "@/assets/arteries.json";
 
-    import MapFeatures from './MapFeatures'
-    import MuniBuses from './MuniBuses'
-    
-    import EventHub from '@/services/EventHub.js';
-    
+import MapFeatures from "./MapFeatures";
+import MuniBuses from "./MuniBuses";
 
-    export default {
-        name: 'BaseMap',
+import EventHub from "@/services/EventHub.js";
 
-        components:{
-            MapFeatures,
-            MuniBuses
-        },
+import { dispatch, mapActions, mapState } from "vuex";
 
-        data() {
-            return {
-                path: '',
-                streets: {
-                    features: streets.features,
-                    class: 'streets'
-                },
-                hoods: {
-                    features: hoods.features,
-                    class: 'hoods'
-                },
-                arteries: {
-                    features: arteries.features,
-                    class: 'arteries'
-                }
-            }
-        },
+export default {
+  name: "BaseMap",
 
-        methods: {
-            projection() {
-                var height = window.innerHeight
-                var width = window.innerWidth
+  components: {
+    MapFeatures,
+    MuniBuses
+  },
 
-                // Create a unit projection.
-                var projection = d3.geoMercator()
-                    .scale(1)
-                    .translate([0, 0]);
+  created() {
+    this.addProjection();
+  },
 
-                // Create a path generator.
-                var path = d3.geoPath()
-                    .projection(projection);
+  data() {
+    return {
+      transform: null,
+      height: "100vh",
+      width: "100%",
+      streets: {
+        features: streets.features,
+        class: "streets"
+      },
+      hoods: {
+        features: hoods.features,
+        class: "hoods"
+      },
+      arteries: {
+        features: arteries.features,
+        class: "arteries"
+      }
+    };
+  },
 
-                // Compute the bounds of a feature of interest, then derive scale & translate.
-                var b = path.bounds(streets),
-                s = .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
-                t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
+  computed: {
+    ...mapState("map", ["projection", "geoPath"]),
+    ...mapState("buses", ["routeVehicles"]),
+    ...mapState("routes", ["routeInfo"])
+  },
 
-                // Update the projection to use computed scale & translate.
-                return projection
-                        .scale(s)
-                        .translate(t);
+  methods: {
+    ...mapActions("map", ["createProjection"]),
+    async addProjection() {
+      let getPosition = options => {
+        return new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
+      };
 
-            },
-            geoPath() {
+      let position = await getPosition();
 
-                return d3.geoPath().projection(this.projection());
+      this.lat = position.coords.latitude;
+      this.lon = position.coords.longitude;
 
-            }
-        }
-        
+
+      var height = window.innerHeight;
+      var width = window.innerWidth;
+      // Create a unit projection.
+      var projection = d3
+        .geoMercator()
+        .center([this.lon, this.lat])
+        .scale(.1)
+        .translate([0, 0]);
+
+      // Create a path generator.
+      var path = d3.geoPath().projection(projection);
+
+      // Compute the bounds of a feature of interest, then derive scale & translate.
+      var b = path.bounds(streets),
+        s =
+          0.95 /
+          Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+        t = [
+          (width - s * (b[1][0] + b[0][0])) / 2,
+          (height - s * (b[1][1] + b[0][1])) / 2
+        ];
+
+      this.createProjection(projection.scale(s).translate(t));
+
+      this.transform = `translate(${projection([this.lon, this.lat])})`;
+
     }
+  }
+};
 </script>
 
 <style scoped>
+.sf-map {
+  position: absolute;
+}
 
-
-    .sf-map {
-        position: absolute;
-        padding-left: 100px;
-        border: 1px solid grey;
-        background: lightblue;
-    }
-
+@media screen and (max-width: 768px) {
+  .sf-map {
+    position: relative;
+    padding: 0;
+  }
+}
 </style>

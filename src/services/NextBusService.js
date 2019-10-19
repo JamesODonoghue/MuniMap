@@ -44,6 +44,7 @@ export default NextBusService = {
 
         return NextBusService.getData(params)
             .then(function(data){
+                console.log(data);
                 NextBusService.lastTimeReported = data.lastTime.time;
                 return data.vehicle.map(function(busData){
                     return busData;
