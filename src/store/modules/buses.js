@@ -1,9 +1,10 @@
 import { MUNI_TAG } from '@/constants/constants';
 import NextBusApi from '@/api/NextBusApi';
-import { FETCH_ROUTES, FETCH_VEHICLES, FETCH_ROUTE_VEHICLES, FILTER_UPDATE } from '../action-types';
+import { FETCH_ROUTES, FETCH_VEHICLES, FETCH_ROUTE_VEHICLES, FILTER_UPDATE, SET_ROUTE } from '../action-types';
 import { FETCH_ROUTES_SUCCESS, FETCH_VEHICLES_SUCCESS, HIDE_VEHICLE} from '../mutation-types';
 
 const state = {
+    currentRoute: '1',
     routeVehicles: {}
 }
 
@@ -12,6 +13,7 @@ const getters = {};
 const actions = {
 
     async [FETCH_ROUTE_VEHICLES]({ state, commit, rootState }, routeTag) {
+
         let params = {
             agencyTag: MUNI_TAG,
             lastReportedTime: 0,
@@ -37,6 +39,7 @@ const actions = {
 }
 
 const mutations = {
+
     setVehicles(state, vehicles) {
         state.vehicles = vehicles;
     },
@@ -44,6 +47,7 @@ const mutations = {
     [FETCH_VEHICLES_SUCCESS](state, { routeTag, routeVehiclesResponse, rootState }) {
 
         let newState = {
+            currentRoute: routeTag,
             routeVehicles:{
                 ...state.routeVehicles,
                 [routeTag]: routeVehiclesResponse.vehicle
@@ -51,6 +55,7 @@ const mutations = {
         };
 
         state.routeVehicles = newState.routeVehicles;
+        state.currentRoute = newState.currentRoute;
 
     },
 

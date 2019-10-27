@@ -1,15 +1,14 @@
 <template>
-
+    
 </template>
 
 <script>
-    export default {
-        name: 'AppHeader'
-    }
+export default {
+    name: 'AppHeader'
+}
 </script>
 
 <style scoped>
-
 h1 {
     font-weight: 300;
 }
@@ -19,5 +18,4 @@ h1 {
     align-items: center;
     flex-direction: column;
 }
-
 </style>

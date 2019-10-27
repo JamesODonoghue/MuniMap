@@ -9,7 +9,7 @@ Vue.config.productionTip = false
 
 store.subscribe((mutation, state) => {
 	// Store the state object as a JSON string
-	localStorage.setItem('store', JSON.stringify(state));
+	// localStorage.setItem('store', JSON.stringify(state));
 });
 
 /* eslint-disable no-new */
@@ -18,7 +18,7 @@ new Vue({
   components: { App },
   store,
   beforeCreate() {
-		this.$store.commit('initialiseStore');
+		// this.$store.commit('initialiseStore');
 	},
   render (h) {
     return h('App')

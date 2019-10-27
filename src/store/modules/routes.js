@@ -5,8 +5,9 @@ import { MUNI_TAG } from '@/constants/constants';
 
 const state = {
     routeInfo: null,
-    routesLoaded: false
-}
+    routesLoaded: false,
+    currentRoute: '47'
+};
 
 const getters = {
     selectedRoutes: (state, getters, rootState) => {

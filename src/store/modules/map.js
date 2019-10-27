@@ -1,6 +1,6 @@
 import { MUNI_TAG } from '@/constants/constants';
 import NextBusApi from '@/api/NextBusApi';
-import * as d3 from 'd3';
+import { geoPath } from 'd3-geo';
 
 import streets from '@/assets/streets.json';
 import hoods from '@/assets/neighborhoods.json';
@@ -15,14 +15,14 @@ const state = {
 const getters = {};
 
 const actions = {
-    createProjection({state, commit}, projection) {
+    createProjection({ state, commit }, projection) {
         commit('UPDATE_PROJECTION', projection);
     }
 };
 const mutations = {
     UPDATE_PROJECTION(state, projection) {
         state.projection = projection;
-        state.geoPath = d3.geoPath().projection(projection);
+        state.geoPath = geoPath().projection(projection);
     }
 };
 

@@ -1,10 +1,11 @@
-<template v-if="routeInfo">
-  <div id="app" >
-      <AppHeader />
-      <CustomSelect :options="routeInfo" valueKey="tag" labelKey="title" />
-      <!-- <RouteFilter /> -->
-      <BaseMap />
-  </div>
+<template>
+    <div id="app">
+        <template v-if="routeInfo">
+            <AppHeader />
+            <CustomSelect :options="routeInfo" valueKey="tag" labelKey="title" :value="currentRoute" :onChange="handleChange" />
+            <BaseMap :vehicles="routeVehicles" :routes="routeInfo" :selectedRoute="currentRoute" />
+        </template>
+    </div>
 </template>
 
 <script>
@@ -22,7 +23,8 @@ import {
 
 import {
     FETCH_ROUTES,
-    FILTER_UPDATE
+    FILTER_UPDATE,
+    FETCH_ROUTE_VEHICLES
 } from "@/store/action-types";
 
 export default {
@@ -32,16 +34,20 @@ export default {
         BaseMap,
         AppHeader
     },
-    created(){
+    created() {
+
     },
-    mounted(){
-      if(!this.routeInfo) this.FETCH_ROUTES();
+    mounted() {
+        if (!this.routeInfo) this.FETCH_ROUTES();
     },
     computed: {
-        ...mapState("routes", ["routeInfo", "routesLoaded"])
+        ...mapState(["routeInfo", "routesLoaded", "currentRoute", "routeVehicles"]),
     },
     methods: {
-        ...mapActions("routes", [FETCH_ROUTES])    
+        handleChange(routeObj) {
+            this.FILTER_UPDATE(routeObj);
+        },
+        ...mapActions([FETCH_ROUTES, FETCH_ROUTE_VEHICLES, FILTER_UPDATE]),
     }
 };
 </script>
@@ -49,5 +55,11 @@ export default {
 <style>
 #app {
     display: flex;
+}
+
+body {
+    background: #000;
+    font-family: "Helvetica";
+    font-weight: bold;
 }
 </style>

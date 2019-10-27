@@ -1,6 +1,6 @@
 <template>
 <div class="filter-container" :class="{'open': showDropdown}">
-    <div class="filter-search">
+    <!-- <div class="filter-search">
         <input type="text" v-model="query" />
     </div>
     <div class="filter-dropdown">
@@ -13,7 +13,7 @@
         <div class="filter-button">
             <button v-on:click.prevent="showDropdown=!showDropdown"></button>
         </div>
-    </div>
+    </div> -->
 </div>
 </template>
 
@@ -43,7 +43,6 @@ export default {
     },
 
     computed: {
-        ...mapState("routes", ["routeInfo"]),
         filteredRoutes() {
             if (!this.routeInfo) this.FETCH_ROUTES();
 
@@ -65,8 +64,6 @@ export default {
     },
 
     methods: {
-        ...mapActions("routes", [FETCH_ROUTES]),
-        ...mapActions("buses", [FILTER_UPDATE])
     }
 };
 </script>
