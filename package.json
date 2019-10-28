@@ -5,6 +5,7 @@
   "author": "James O'Donoghue <jodonogh1@gmail.com>",
   "private": true,
   "scripts": {
+    "start": "node server.js",
     "postinstall": "npm run build",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "staging": "cross-env NODE_ENV=staging webpack",
@@ -35,7 +36,7 @@
     "friendly-errors-webpack-plugin": "~1.7",
     "html-webpack-plugin": "~3.2",
     "mini-css-extract-plugin": "~0.5",
-    "node-sass": "~4.13.0",
+    "node-sass": "^4.13.0",
     "optimize-css-assets-webpack-plugin": "~3.2",
     "sass-loader": "~7.1",
     "uglifyjs-webpack-plugin": "~1.2",
