@@ -37,10 +37,6 @@ import hoods from "@/assets/neighborhoods.json";
 import MapFeatures from "./MapFeatures";
 import MuniBuses from "./MuniBuses";
 
-import EventHub from "@/services/EventHub.js";
-
-import { dispatch, mapActions, mapState } from "vuex";
-
 export default {
     name: "BaseMap",
 
